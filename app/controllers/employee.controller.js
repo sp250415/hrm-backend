@@ -3,7 +3,8 @@ const Employee = require('../models/employee.model.js');
 // Create and Save a new Employee
 exports.create = (req, res) => {
     // Validate request
-    if(!req.body.content) {
+    console.log(req.body)
+    if(!req.body) {
         return res.status(400).send({
             message: "Employee content can not be empty"
         });
