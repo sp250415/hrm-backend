@@ -3,7 +3,7 @@ const Employee = require('../models/employee.model.js');
 // Create and Save a new Employee
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.body)
+    console.log(req)
     if(!req.body) {
         return res.status(400).send({
             message: "Employee content can not be empty"
@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     // Create a Employee
     const employee = new Employee({
         title: req.body.title || "Untitled Employee", 
-        content: req.body.content
+        content: req.body
     });
 
     // Save Employee in the database
