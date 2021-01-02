@@ -3,7 +3,6 @@ const Employee = require('../models/employee.model.js');
 // Create and Save a new Employee
 exports.create = (req, res) => {
     // Validate request
-    console.log(req)
     if(!req.body) {
         return res.status(400).send({
             message: "Employee content can not be empty"
@@ -12,8 +11,8 @@ exports.create = (req, res) => {
 
     // Create a Employee
     const employee = new Employee({
-        title: req.body.title || "Untitled Employee", 
-        content: req.body
+        name : req.body.name,
+        salary : req.body.salary
     });
 
     // Save Employee in the database
@@ -43,14 +42,16 @@ exports.findAll = (req, res) => {
 
 // Find a single Employee with a EmployeeId
 exports.findOne = (req, res) => {
+    console.log(req.params.id)
     Employee.findById(req.params.EmployeeId)
-    .then(Employee => {
-        if(!Employee) {
+    .then(emp => {
+        console.log(emp)
+        if(!emp) {
             return res.status(404).send({
-                message: "Employee not found with id " + req.params.EmployeeId
+                message: "Employee not found " + req.params.EmployeeId
             });            
         }
-        res.send(Employee);
+        res.send(emp);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -67,7 +68,7 @@ exports.findOne = (req, res) => {
 // Update a Employee identified by the EmployeeId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if(!req.body.content) {
+    if(!req.body) {
         return res.status(400).send({
             message: "Employee content can not be empty"
         });
@@ -75,8 +76,8 @@ exports.update = (req, res) => {
 
     // Find Employee and update it with the request body
     Employee.findByIdAndUpdate(req.params.EmployeeId, {
-        title: req.body.title || "Untitled Employee",
-        content: req.body.content
+        name: req.body.name || "Untitled Employee",
+        salary: req.body.salary
     }, {new: true})
     .then(Employee => {
         if(!Employee) {
