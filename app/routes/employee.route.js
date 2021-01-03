@@ -1,6 +1,4 @@
 const employees = require('../controllers/employee.controller.js');
-// const Employees = require('../models/employee.model')
-
 
 module.exports = function(express) {
 

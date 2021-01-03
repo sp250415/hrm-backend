@@ -12,7 +12,13 @@ exports.create = (req, res) => {
     // Create a Employee
     const employee = new Employee({
         name : req.body.name,
-        salary : req.body.salary
+        salary : req.body.salary,
+        email : req.body.email,
+        password : req.body.password,
+        isAdmin : req.body.isAdmin,
+        contact : req.body.contact,
+        role : req.body.role,
+        team : req.body.team
     });
 
     // Save Employee in the database
@@ -44,7 +50,6 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     Employee.findById(req.params.employeeId)
     .then(emp => {
-        console.log(emp)
         if(!emp) {
             return res.status(404).send({
                 message: "Employee not found " + req.params.employeeId
@@ -75,8 +80,14 @@ exports.update = (req, res) => {
 
     // Find Employee and update it with the request body
     Employee.findByIdAndUpdate(req.params.employeeId, {
-        name: req.body.name || "Untitled Employee",
-        salary: req.body.salary
+        name : req.body.name,
+        salary : req.body.salary,
+        email : req.body.email,
+        password : req.body.password,
+        isAdmin : req.body.isAdmin,
+        contact : req.body.contact,
+        role : req.body.role,
+        team : req.body.team
     }, {new: true})
     .then(Employee => {
         if(!Employee) {
