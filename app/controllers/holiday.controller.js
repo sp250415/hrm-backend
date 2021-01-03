@@ -3,6 +3,7 @@ const Holiday = require('../models/holiday.model.js');
 // Create and Save a new Holiday
 exports.create = (req, res) => {
     // Validate request
+    console.log(req)
     if(!req.body) {
         return res.status(400).send({
             message: "Holiday content can not be empty"
@@ -16,7 +17,7 @@ exports.create = (req, res) => {
         type : req.body.type,
         description : req.body.description,
         created_by : req.body.created_by,
-        updated_by : req.body.updated_by || req.body.created_by
+        updated_by : req.body.updated_by
     });
 
     // Save Holiday in the database
@@ -83,6 +84,7 @@ exports.update = (req, res) => {
         type : req.body.type,
         description : req.body.description,
         created_by : req.body.created_by,
+        updated_by : req.body.updated_by || req.body.created_by
     }, {new: true})
     .then(Holiday => {
         if(!Holiday) {

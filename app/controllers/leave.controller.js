@@ -19,7 +19,7 @@ exports.create = (req, res) => {
     });
 
     // Save Leave in the database
-    Leave.save()
+    leave.save()
     .then(data => {
         res.send(data);
     }).catch(err => {
