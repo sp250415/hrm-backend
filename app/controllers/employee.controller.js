@@ -42,30 +42,29 @@ exports.findAll = (req, res) => {
 
 // Find a single Employee with a EmployeeId
 exports.findOne = (req, res) => {
-    console.log(req.params.id)
-    Employee.findById(req.params.EmployeeId)
+    Employee.findById(req.params.employeeId)
     .then(emp => {
         console.log(emp)
         if(!emp) {
             return res.status(404).send({
-                message: "Employee not found " + req.params.EmployeeId
+                message: "Employee not found " + req.params.employeeId
             });            
         }
         res.send(emp);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Employee not found with id " + req.params.EmployeeId
+                message: "Employee not found with id " + req.params.employeeId
             });                
         }
         return res.status(500).send({
-            message: "Error retrieving Employee with id " + req.params.EmployeeId
+            message: "Error retrieving Employee with id " + req.params.employeeId
         });
     });
 };
 
 
-// Update a Employee identified by the EmployeeId in the request
+// Update a Employee identified by the employeeId in the request
 exports.update = (req, res) => {
     // Validate Request
     if(!req.body) {
@@ -75,48 +74,48 @@ exports.update = (req, res) => {
     }
 
     // Find Employee and update it with the request body
-    Employee.findByIdAndUpdate(req.params.EmployeeId, {
+    Employee.findByIdAndUpdate(req.params.employeeId, {
         name: req.body.name || "Untitled Employee",
         salary: req.body.salary
     }, {new: true})
     .then(Employee => {
         if(!Employee) {
             return res.status(404).send({
-                message: "Employee not found with id " + req.params.EmployeeId
+                message: "Employee not found with id " + req.params.employeeId
             });
         }
         res.send(Employee);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Employee not found with id " + req.params.EmployeeId
+                message: "Employee not found with id " + req.params.employeeId
             });                
         }
         return res.status(500).send({
-            message: "Error updating Employee with id " + req.params.EmployeeId
+            message: "Error updating Employee with id " + req.params.employeeId
         });
     });
 };
 
 
-// Delete a Employee with the specified EmployeeId in the request
+// Delete a Employee with the specified employeeId in the request
 exports.delete = (req, res) => {
-    Employee.findByIdAndRemove(req.params.EmployeeId)
+    Employee.findByIdAndRemove(req.params.employeeId)
     .then(Employee => {
         if(!Employee) {
             return res.status(404).send({
-                message: "Employee not found with id " + req.params.EmployeeId
+                message: "Employee not found with id " + req.params.employeeId
             });
         }
         res.send({message: "Employee deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
-                message: "Employee not found with id " + req.params.EmployeeId
+                message: "Employee not found with id " + req.params.employeeId
             });                
         }
         return res.status(500).send({
-            message: "Could not delete Employee with id " + req.params.EmployeeId
+            message: "Could not delete Employee with id " + req.params.employeeId
         });
     });
 };
