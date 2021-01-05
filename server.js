@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 require('./app/routes/employee.route')(app);
 require('./app/routes/holiday.route')(app);
 require('./app/routes/leave.route')(app);
-
+require('./app/routes/login.route')(app);
 
 
 // Connecting to the database
