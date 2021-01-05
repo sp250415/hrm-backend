@@ -3,16 +3,16 @@ const Employee = require('../models/employee.model.js');
 var jwt = require('jsonwebtoken');
 
 
-// Login
+// Login user
 exports.login = (req, res) => {
-    console.log(req.body)
+
     // Validate request
     if(!req.body) {
         return res.status(400).send({
-            message: "Leave content can not be empty"
+            message: "content can not be empty"
         });
     }
-
+    
     Employee.findOne({'email':req.body.email})
     .then(emp => {
         if(!emp) {
@@ -20,11 +20,14 @@ exports.login = (req, res) => {
                 message: "Employee not found "
             });            
         }
-        
-        let token = jwt.sign({ userId: emp._id }, 'hrm');
-        emp.token = token;
-        console.log(emp);
-         res.send(emp);
+        console.log(req.body.password === emp.password);
+        if(req.body.password === emp.password){
+            let responseData = {message:'Login Success',token:jwt.sign({ userId: emp._id }, 'hrm')}
+             res.send(responseData);
+        }else{
+            let responseData = {message:'Login Failed'}
+            res.send(responseData);
+        }
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
