@@ -11,6 +11,23 @@ app.use(cors())
 // }));
 app.use(bodyParser.json())
 
+app.all("*", function (req, res, next) {
+    const allowedOrigins = [
+      "http://localhost:4200", //URL
+    ];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Authorization, Content-Type, x-cm-user-id"
+    );
+    next();
+  });
+
 require('./app/routes/employee.route')(app);
 require('./app/routes/holiday.route')(app);
 require('./app/routes/leave.route')(app);

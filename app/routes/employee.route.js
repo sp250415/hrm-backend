@@ -1,4 +1,5 @@
 const employees = require('../controllers/employee.controller.js');
+const jwt = require('../util');
 
 module.exports = function(express) {
 
@@ -8,7 +9,7 @@ module.exports = function(express) {
 
     // Retrieve all employees
     express
-    .get('/employees', employees.findAll);
+    .get('/employees', jwt, employees.findAll);
 
     // Retrieve a single employee with employeeId
     express

@@ -5,7 +5,6 @@ var jwt = require('jsonwebtoken');
 
 // Login user
 exports.login = (req, res) => {
-
     // Validate request
     if(!req.body) {
         return res.status(400).send({
@@ -13,7 +12,7 @@ exports.login = (req, res) => {
         });
     }
     
-    Employee.findOne({'email':req.body.email})
+    Employee.findOne({'email':req.body.username})
     .then(emp => {
         if(!emp) {
             return res.status(404).send({
@@ -22,7 +21,7 @@ exports.login = (req, res) => {
         }
         console.log(req.body.password === emp.password);
         if(req.body.password === emp.password){
-            let responseData = {message:'Login Success',token:jwt.sign({ userId: emp._id }, 'hrm')}
+            let responseData = {message:'Login Success',success:true,token:jwt.sign({ userId: emp._id }, 'hrm')}
              res.send(responseData);
         }else{
             let responseData = {message:'Login Failed'}
