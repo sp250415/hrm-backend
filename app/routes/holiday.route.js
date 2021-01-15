@@ -12,5 +12,5 @@ module.exports = function(express) {
 
     // Delete a holiday with holidayId
     express
-    .delete('/holiday/:leaveId', holiday.delete);
+    .delete('/holiday/:holidayId', holiday.delete);
 }

@@ -3,7 +3,6 @@ const Holiday = require('../models/holiday.model.js');
 // Create and Save a new Holiday
 exports.create = (req, res) => {
     // Validate request
-    console.log(req)
     if(!req.body) {
         return res.status(400).send({
             message: "Holiday content can not be empty"
@@ -13,11 +12,8 @@ exports.create = (req, res) => {
     // Create a Holiday
     const holiday = new Holiday({
         date : req.body.date,
-        title : req.body.title,
-        type : req.body.type,
-        description : req.body.description,
-        created_by : req.body.created_by,
-        updated_by : req.body.updated_by
+        day : req.body.day,
+        particulars : req.body.particulars,
     });
 
     // Save Holiday in the database
@@ -40,29 +36,6 @@ exports.findAll = (req, res) => {
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving Employees."
-        });
-    });
-};
-
-
-// Find a single Holiday with a EmployeeId
-exports.findOne = (req, res) => {
-    Holiday.findById(req.params.employeeId)
-    .then(emp => {
-        if(!emp) {
-            return res.status(404).send({
-                message: "Holiday not found " + req.params.employeeId
-            });            
-        }
-        res.send(emp);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Holiday not found with id " + req.params.employeeId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving Holiday with id " + req.params.employeeId
         });
     });
 };

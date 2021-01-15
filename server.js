@@ -1,12 +1,14 @@
 var express = require('express');
 var app = express();
+var cors = require('cors');
 const bodyParser = require('body-parser');
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(cors())
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
 app.use(bodyParser.json())
 
 require('./app/routes/employee.route')(app);
